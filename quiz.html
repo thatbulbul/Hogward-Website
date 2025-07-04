@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>House Sorting Quiz</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>🏰 Sorting Hat Quiz</h1>
+    <a href="index.html" class="cta-btn">← Back to Home</a>
+  </header>
+
+  <section id="quiz">
+    <h2>Which House Do You Belong To?</h2>
+    <form id="sortingQuiz">
+      <div class="question">
+        <p>1. What trait do you value most?</p>
+        <label><input type="radio" name="q1" value="gryffindor" required> Bravery</label><br>
+        <label><input type="radio" name="q1" value="slytherin"> Ambition</label><br>
+        <label><input type="radio" name="q1" value="ravenclaw"> Wisdom</label><br>
+        <label><input type="radio" name="q1" value="hufflepuff"> Loyalty</label>
+      </div>
+
+      <div class="question">
+        <p>2. What is your favorite class?</p>
+        <label><input type="radio" name="q2" value="ravenclaw" required> Charms</label><br>
+        <label><input type="radio" name="q2" value="gryffindor"> Defense Against the Dark Arts</label><br>
+        <label><input type="radio" name="q2" value="hufflepuff"> Herbology</label><br>
+        <label><input type="radio" name="q2" value="slytherin"> Potions</label>
+      </div>
+
+      <div class="question">
+        <p>3. Choose a magical object:</p>
+        <label><input type="radio" name="q3" value="slytherin" required> Invisibility Cloak</label><br>
+        <label><input type="radio" name="q3" value="gryffindor"> Sword of Gryffindor</label><br>
+        <label><input type="radio" name="q3" value="hufflepuff"> Hufflepuff’s Cup</label><br>
+        <label><input type="radio" name="q3" value="ravenclaw"> Ravenclaw’s Diadem</label>
+      </div>
+
+      <button type="submit" class="cta-btn">Reveal My House</button>
+    </form>
+
+    <div id="result" class="result-box"></div>
+  </section>
+
+  <script>
+    document.getElementById("sortingQuiz").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const form = new FormData(e.target);
+      const answers = [...form.values()];
+
+      const scores = {
+        gryffindor: 0,
+        slytherin: 0,
+        ravenclaw: 0,
+        hufflepuff: 0,
+      };
+
+      answers.forEach((house) => {
+        scores[house]++;
+      });
+
+      const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+      const topHouse = sorted[0][0];
+
+      const resultBox = document.getElementById("result");
+      resultBox.innerHTML = `<h3>You belong in <span class="${topHouse}">${topHouse.charAt(0).toUpperCase() + topHouse.slice(1)}!</span></h3>`;
+    });
+  </script>
+</body>
+</html>
